@@ -1,7 +1,11 @@
+import { BrowserRouter } from "react-router-dom";
+import Router from "./Routes";
 
 const App = () => {
   return (
-    <div>App</div>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   )
 }
 
