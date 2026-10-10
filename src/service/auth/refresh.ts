@@ -23,19 +23,22 @@ async function handleRefresh(): Promise<string> {
             LOCALSTORAGE_KEYS.ACCESS_TOKEN,
             data.credentials.accessToken
         );
+
         if (data.credentials.refreshToken)
             localStorage.setItem(
                 LOCALSTORAGE_KEYS.REFRESH_TOKEN,
                 data.credentials.refreshToken
             );
-
         return data.credentials.accessToken;
+
     } catch (error) {
         localStorage.removeItem(LOCALSTORAGE_KEYS.ACCESS_TOKEN);
         localStorage.removeItem(LOCALSTORAGE_KEYS.REFRESH_TOKEN);
+        
         if (window.location.pathname !== ROUTES.LOGIN)
             window.location.href = ROUTES.LOGIN;
         throw error;
+
     } finally {
         refreshTokenPromise = null;
     }

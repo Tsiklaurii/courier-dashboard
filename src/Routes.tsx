@@ -7,23 +7,19 @@ import MainLayout from "./layouts/MainLayout";
 const Router = () => {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <GuardPath pathName="home">
-            <MainLayout />
-          </GuardPath>
-        }
+      <Route path="/" element={
+        <GuardPath pathName="home">
+          <MainLayout />
+        </GuardPath>
+      }
       >
         <Route index element={<HomePage />} />
       </Route>
-      <Route
-        path="/login"
-        element={
-          <GuardPath pathName="login">
-            <Login />
-          </GuardPath>
-        }
+      <Route path="/login" element={
+        <GuardPath pathName="login">
+          <Login />
+        </GuardPath>
+      }
       />
     </Routes>
   );

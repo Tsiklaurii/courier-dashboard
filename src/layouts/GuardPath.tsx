@@ -10,16 +10,10 @@ const pathOptions = {
 };
 
 const getAuthState = (): AuthState =>
-  localStorage.getItem(LOCALSTORAGE_KEYS.ACCESS_TOKEN)
-    ? "authenticated"
-    : "unauthenticated";
+  localStorage.getItem(LOCALSTORAGE_KEYS.ACCESS_TOKEN) ? "authenticated" : "unauthenticated";
 
-const GuardPath = ({
-  children,
-  pathName,
-}: {
-  children: React.ReactNode;
-  pathName: keyof typeof pathOptions;
+const GuardPath = ({ children, pathName, }: {
+  children: React.ReactNode; pathName: keyof typeof pathOptions;
 }) => {
   useLocation();
   const config = pathOptions[pathName];

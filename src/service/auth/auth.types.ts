@@ -5,6 +5,15 @@ export type User = {
     firstName: string;
     lastName: string;
     role: string;
+    data?: Record<string, unknown> & {
+        image?: string;
+        profileImage?: string;
+        street?: string;
+        pid?: string;
+        phoneNumber?: string;
+        vehicle?: string;
+        address?: string | { street?: string; lng?: number; lat?: number };
+    };
 };
 
 export interface LoginForm {
