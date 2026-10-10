@@ -2,7 +2,7 @@ import axios from "axios";
 import { refreshToken } from "./service/auth/refresh";
 import { ENDPOINTS, LOCALSTORAGE_KEYS } from "./config";
 
-const AUTH_PATHS = [ENDPOINTS.LOGIN, ENDPOINTS.REFRESH];
+const AUTH_PATHS = [ENDPOINTS.LOGIN, ENDPOINTS.REGISTER, ENDPOINTS.REFRESH];
 const $api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     headers: { "Content-Type": "application/json" },

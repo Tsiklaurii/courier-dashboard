@@ -1,5 +1,6 @@
 const ENDPOINTS = {
   LOGIN: "/auth/login",
+  REGISTER: "/auth/register",
   REFRESH: "/auth/refresh",
   LOGOUT: "/auth/logout",
   ME: "/auth/me",
@@ -8,6 +9,7 @@ const ENDPOINTS = {
 const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
+  REGISTER: "/register",
 };
 
 const LOCALSTORAGE_KEYS = {

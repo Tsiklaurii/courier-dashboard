@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import TextFieldElement from "../shared/TextFieldElementProps";
+import TextFieldElement from "../shared/TextFieldElement";
 import login from "../service/auth/login";
 import { ROUTES } from "../config";
 import type { LoginForm } from "../service/auth/auth.types";
@@ -68,6 +68,7 @@ const Login = () => {
               type="password"
               placeholder="Enter your password"
               required
+              minLength={4}
             />
             <TextFieldElement
               name="role"
@@ -84,7 +85,7 @@ const Login = () => {
               <Typography color="error" variant="body2" role="alert">{loginError}</Typography>
             )}
             <Button type="submit" variant="contained" color="primary" fullWidth>Login</Button>
-            <Button type="button" variant="outlined" fullWidth>Registration</Button>
+            <Button type="button" variant="outlined" fullWidth onClick={() => navigate(ROUTES.REGISTER)}>Registration</Button>
           </Box>
         </FormProvider>
       </Box>

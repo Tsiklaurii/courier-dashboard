@@ -22,6 +22,15 @@ export interface LoginForm {
     role: "admin" | "user" | "courier";
 }
 
+export interface RegistrationForm extends LoginForm {
+    firstName: string;
+    lastName: string;
+    pid: string;
+    phoneNumber: string;
+    profileImage: string;
+    address?: string;
+}
+
 export interface RefreshTokenResponse {
     credentials: {
         accessToken: string;
