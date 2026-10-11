@@ -46,10 +46,6 @@ export default function Header({ user, tabs, tab, onTabChange, onShowProfile, on
     setAnchorElNav(null);
   };
 
-  const handleLogout = async () => {
-    await onLogout();
-  };
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -175,7 +171,7 @@ export default function Header({ user, tabs, tab, onTabChange, onShowProfile, on
                 <MenuItem
                   key={setting}
                   onClick={
-                    setting === "Logout" ? handleLogout : handleShowProfile
+                    setting === "Logout" ? onLogout : handleShowProfile
                   }
                 >
                   <Typography sx={{ textAlign: "center" }}>

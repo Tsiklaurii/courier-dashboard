@@ -1,4 +1,3 @@
-
 export type User = {
     id: number;
     email: string;
@@ -22,6 +21,15 @@ export interface LoginForm {
     role: "admin" | "user" | "courier";
 }
 
+export type WorkingDay = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+
+export interface WorkingSlot {
+    day: WorkingDay | "";
+    time: string;
+}
+
+export type WorkingDays = Partial<Record<WorkingDay, { enable: boolean; time: string }[]>>;
+
 export interface RegistrationForm extends LoginForm {
     firstName: string;
     lastName: string;
@@ -29,6 +37,8 @@ export interface RegistrationForm extends LoginForm {
     phoneNumber: string;
     profileImage: string;
     address?: string;
+    vehicle?: string;
+    workingDays?: WorkingDays;
 }
 
 export interface RefreshTokenResponse {

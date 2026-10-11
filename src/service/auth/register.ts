@@ -3,7 +3,7 @@ import { ENDPOINTS } from "../../config";
 import type { RegistrationForm } from "./auth.types";
 
 const register = async (form: RegistrationForm) => {
-  const { firstName, lastName, email, password, role, pid, phoneNumber, profileImage, address } = form;
+  const { firstName, lastName, email, password, role, pid, phoneNumber, profileImage, address, vehicle, workingDays } = form;
   const response = await $api.post(ENDPOINTS.REGISTER, {
     firstName,
     lastName,
@@ -15,6 +15,7 @@ const register = async (form: RegistrationForm) => {
       phoneNumber,
       profileImage,
       ...(role === "user" ? { address } : {}),
+      ...(role === "courier" ? { vehicle, workingDays } : {}),
     },
   });
   return response.data;

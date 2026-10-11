@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import { ROUTES } from "./config";
@@ -20,7 +19,6 @@ const Router = () => {
         </GuardPath>
       }
       >
-        <Route index element={<HomePage />} />
       </Route>
       <Route path="/login" element={
         <GuardPath pathName="login">

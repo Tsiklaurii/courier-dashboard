@@ -10,17 +10,19 @@ interface TextFieldElementProps {
   required?: boolean;
   minLength?: number;
   pattern?: { value: RegExp; message: string };
-  options?: { value: string; label: string }[];
+  options?: { value: string; label: string; disabled?: boolean }[];
 }
 
 const TextFieldElement = ({ name, label, type = "text", placeholder, required = false, minLength, pattern, options }: TextFieldElementProps) => {
   const { control } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
+  const [selectOpen, setSelectOpen] = useState(false);
 
   return (
     <Controller
       name={name}
       control={control}
+      defaultValue=""
       rules={{
         required: required ? `${label} is required` : false,
         minLength: minLength ? { value: minLength, message: `${label} must be at least ${minLength} characters` } : undefined,
@@ -30,6 +32,7 @@ const TextFieldElement = ({ name, label, type = "text", placeholder, required = 
         return (
           <TextField
             {...field}
+            value={field.value ?? ""}
             placeholder={placeholder}
             select={!!options}
             slotProps={{
@@ -52,6 +55,16 @@ const TextFieldElement = ({ name, label, type = "text", placeholder, required = 
               htmlInput: { "aria-label": label },
               select: options ? {
                 displayEmpty: true,
+                open: selectOpen,
+                onOpen: () => setSelectOpen(true),
+                onClose: () => setSelectOpen(false),
+                SelectDisplayProps: {
+                  onMouseDown: (event) => {
+                    event.preventDefault();
+                    event.currentTarget.focus();
+                  },
+                  onClick: () => setSelectOpen(true),
+                },
                 inputProps: { "aria-label": label },
                 renderValue: (value) => value
                   ? options.find((option) => option.value === value)?.label
@@ -67,7 +80,7 @@ const TextFieldElement = ({ name, label, type = "text", placeholder, required = 
           >
             {options && <MenuItem value="" disabled>{placeholder}</MenuItem>}
             {options?.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option.value} value={option.value} disabled={option.disabled}>
                 {option.label}
               </MenuItem>
             ))}
