@@ -1,22 +1,29 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Avatar, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import type { WorkingDay, WorkingDays } from "../service/auth/auth.types";
 
 interface CourierScheduleProps {
   workingDays?: WorkingDays;
+  name?: string;
+  profileImage?: string;
 }
 
 const days: WorkingDay[] = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-export default function CourierSchedule({ workingDays }: CourierScheduleProps) {
+export default function CourierSchedule({ workingDays, name, profileImage }: CourierScheduleProps) {
   const rows = days.flatMap((day) =>
     (workingDays?.[day] ?? []).map((slot) => ({ day, ...slot })),
   );
 
   return (
     <Paper variant="outlined" sx={{ mt: 3, p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>Working schedule</Typography>
+      {name && (
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+          <Avatar src={profileImage} alt={name} sx={{ bgcolor: "primary.main" }} />
+          <Typography variant="h6">{name}</Typography>
+        </Box>
+      )}
       {rows.length === 0 ? (
-        <Typography variant="body2" color="text.secondary">No working schedule registered.</Typography>
+        <Typography variant="body2" color="text.secondary">No working schedule</Typography>
       ) : (
         <TableContainer>
           <Table size="small" aria-label="Registered working schedule">

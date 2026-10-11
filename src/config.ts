@@ -4,6 +4,7 @@ const ENDPOINTS = {
   REFRESH: "/auth/refresh",
   LOGOUT: "/auth/logout",
   ME: "/auth/me",
+  USERS: "/users",
 };
 
 const ROUTES = {

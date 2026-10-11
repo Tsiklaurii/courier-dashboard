@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import UserProfile from "../components/UserProfile";
+import Couriers from "../components/Couriers";
+import Users from "../components/Users";
 import { CustomTabPanel } from "../components/BasicTabs";
 import { ROUTES } from "../config";
 import type { User } from "../service/auth/auth.types";
@@ -40,7 +42,10 @@ export default function MainLayout() {
       <Outlet />
       {user && tab === false && <UserProfile user={user} />}
       {user && tabs.map((label, index) => (
-        <CustomTabPanel key={label} value={tab} index={index} />
+        <CustomTabPanel key={label} value={tab} index={index}>
+          {label === "Couriers" && <Couriers />}
+          {label === "Users" && user.role === "admin" && <Users />}
+        </CustomTabPanel>
       ))}
     </>
   );
