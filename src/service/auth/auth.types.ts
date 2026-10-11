@@ -11,6 +11,7 @@ export type User = {
         pid?: string;
         phoneNumber?: string;
         vehicle?: string;
+        workingDays?: WorkingDays;
         address?: string | { street?: string; lng?: number; lat?: number };
     };
 };

@@ -1,5 +1,6 @@
 import { Avatar, Box, Container, Paper, Typography } from "@mui/material";
 import type { User } from "../service/auth/auth.types";
+import CourierSchedule from "./CourierSchedule";
 
 interface UserProfileProps {
   user: User;
@@ -46,6 +47,7 @@ export default function UserProfile({ user }: UserProfileProps) {
           </Box>
         ))}
       </Paper>
+      {user.role === "courier" && <CourierSchedule workingDays={user.data?.workingDays} />}
     </Container>
   );
 }
