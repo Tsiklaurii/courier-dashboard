@@ -21,25 +21,25 @@ export default function BookingButton({ courierId, currentUser, date, time, enab
   const status = reservedByOther ? "Reserved" : reservedByYou ? "Cancel" : enable ? "Available" : "Unavailable";
 
   return (
-    <Button
-      type="button"
-      size="small"
-      variant="outlined"
-      color={reservedByYou ? "warning" : "success"}
-      disabled={disabled || !canBook || reservedByOther || (!reservedByYou && !enable)}
-      onClick={() => onToggle(courierId, date, time)}
-      sx={{
-        textTransform: "none",
-        whiteSpace: "nowrap",
-        ...(!canBook && {
-          "&.Mui-disabled": {
-            color: "text.secondary",
-            borderColor: "grey.400",
-          },
-        }),
-      }}
-    >
-      {status}
-    </Button>
+      <Button
+        type="button"
+        size="small"
+        variant="outlined"
+        color={reservedByYou ? "warning" : "success"}
+        disabled={disabled || !canBook || reservedByOther || (!reservedByYou && !enable)}
+        onClick={() => onToggle(courierId, date, time)}
+        sx={{
+          textTransform: "none",
+          whiteSpace: "nowrap",
+          ...(!canBook && {
+            "&.Mui-disabled": {
+              color: "text.secondary",
+              borderColor: "grey.400",
+            },
+          }),
+        }}
+      >
+        {status}
+      </Button>
   );
 }
