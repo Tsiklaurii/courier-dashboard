@@ -5,6 +5,8 @@ const ENDPOINTS = {
   LOGOUT: "/auth/logout",
   ME: "/auth/me",
   USERS: "/users",
+  BOOKINGS: "/resource/bookings",
+  BOOKING_ID: (id: string) => `/resource/bookings/${id}`,
 };
 
 const ROUTES = {

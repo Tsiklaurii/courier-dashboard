@@ -43,7 +43,7 @@ export default function MainLayout() {
       {user && tab === false && <UserProfile user={user} />}
       {user && tabs.map((label, index) => (
         <CustomTabPanel key={label} value={tab} index={index}>
-          {label === "Couriers" && <Couriers />}
+          {label === "Couriers" && <Couriers currentUser={user} />}
           {label === "Users" && user.role === "admin" && <Users />}
         </CustomTabPanel>
       ))}

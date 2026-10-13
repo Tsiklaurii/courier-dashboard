@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import type { User } from "../service/auth/auth.types";
 import getCouriers from "../service/users/get-couriers";
 import CourierSchedule from "./CourierSchedule";
+import useBookings from "../hooks/useBookings";
 
-export default function Couriers() {
+export default function Couriers({ currentUser }: { currentUser: User }) {
   const [couriers, setCouriers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { bookings, bookingsReady, bookingError, pending, handleBooking } = useBookings(currentUser);
 
   useEffect(() => {
     let active = true;
@@ -28,6 +30,8 @@ export default function Couriers() {
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Typography variant="h5" sx={{ mb: 3 }}>Couriers</Typography>
+      {!bookingsReady && !bookingError && <Typography color="text.secondary">Loading reservations...</Typography>}
+      {bookingError && <Typography color="error" role="alert">{bookingError}</Typography>}
       {loading && <Typography color="text.secondary">Loading couriers...</Typography>}
       {error && <Typography color="error" role="alert">{error}</Typography>}
       {!loading && !error && couriers.length === 0 && (
@@ -39,6 +43,11 @@ export default function Couriers() {
             name={`${courier.firstName} ${courier.lastName || ""}`.trim()}
             profileImage={courier.data?.profileImage || courier.data?.image}
             workingDays={courier.data?.workingDays}
+            courierId={courier.id}
+            currentUser={currentUser}
+            bookings={bookings}
+            bookingDisabled={!bookingsReady || pending}
+            onToggleBooking={handleBooking}
           />
         </Box>
       ))}

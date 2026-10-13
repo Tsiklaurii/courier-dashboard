@@ -1,15 +1,23 @@
 import { Avatar, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import type { WorkingDay, WorkingDays } from "../service/auth/auth.types";
+import type { User, WorkingDay, WorkingDays } from "../service/auth/auth.types";
+import type { Booking } from "../service/bookings";
+import getNextSlotDate from "../utils/get-next-slot-date";
+import BookingButton from "./BookingButton";
 
 interface CourierScheduleProps {
   workingDays?: WorkingDays;
   name?: string;
   profileImage?: string;
+  courierId?: User["id"];
+  currentUser?: User;
+  bookings?: Booking[];
+  bookingDisabled?: boolean;
+  onToggleBooking?: (courierId: User["id"], date: string, time: string) => Promise<void>;
 }
 
 const days: WorkingDay[] = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-export default function CourierSchedule({ workingDays, name, profileImage }: CourierScheduleProps) {
+export default function CourierSchedule({ workingDays, name, profileImage, courierId, currentUser, bookings = [], bookingDisabled, onToggleBooking }: CourierScheduleProps) {
   const rows = days.flatMap((day) =>
     (workingDays?.[day] ?? []).map((slot) => ({ day, ...slot })),
   );
@@ -35,13 +43,37 @@ export default function CourierSchedule({ workingDays, name, profileImage }: Cou
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(({ day, time, enable }, index) => (
-                <TableRow key={`${day}-${time}-${index}`}>
-                  <TableCell component="th" scope="row" sx={{ py: 1, textTransform: "capitalize" }}>{day}</TableCell>
-                  <TableCell sx={{ py: 1, whiteSpace: "nowrap" }}>{time}</TableCell>
-                  <TableCell sx={{ py: 1 }}>{enable ? "Available" : "Unavailable"}</TableCell>
-                </TableRow>
-              ))}
+              {rows.map(({ day, time, enable }, index) => {
+                const date = getNextSlotDate(day, time);
+
+                return (
+                  <TableRow key={`${day}-${time}-${index}`}>
+                    <TableCell component="th" scope="row" sx={{ py: 1, textTransform: "capitalize" }}>
+                      {day}
+                      {onToggleBooking && <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>{date}</Typography>}
+                    </TableCell>
+                    <TableCell sx={{ py: 1, whiteSpace: "nowrap" }}>{time}</TableCell>
+                    <TableCell sx={{ py: 1 }}>
+                      {onToggleBooking && currentUser && courierId !== undefined && date ? (
+                        <BookingButton
+                          courierId={courierId}
+                          currentUser={currentUser}
+                          date={date}
+                          time={time}
+                          enable={enable}
+                          bookings={bookings}
+                          disabled={bookingDisabled}
+                          onToggle={onToggleBooking}
+                        />
+                      ) : (
+                        <Typography variant="body2" color={enable ? "success.main" : "text.secondary"}>
+                          {enable ? "Available" : "Unavailable"}
+                        </Typography>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
