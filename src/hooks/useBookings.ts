@@ -72,6 +72,5 @@ export default function useBookings(currentUser: User) {
             setPending(false);
         }
     };
-
     return { bookings, bookingsReady, bookingError, pending, handleBooking };
 }
